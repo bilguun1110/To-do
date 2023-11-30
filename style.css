@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+}
+.container {
+  background-image: url("./6f3cbebdc0ec1f5652a9803d8e80e62f.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+
+  justify-content: center;
+  position: absolute;
+}
+#layout {
+  width: 1300px;
+  height: 500px;
+
+  margin-top: 200px;
+  display: flex;
+  gap: 15px;
+}
+#to-do {
+  width: 300px;
+  height: 90px;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+.head {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 15px;
+  padding: 10px 10px;
+  align-items: center;
+}
+.footer {
+  display: flex;
+  gap: 10px;
+  margin: auto;
+  padding-left: 10px;
+  width: 270px;
+  height: 25px;
+  align-items: center;
+}
+.footer:hover {
+  background-color: #808080;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.name {
+  font-size: 20px;
+  font-weight: 600;
+}
+.number {
+  font-size: 15px;
+  color: #808080;
+  font-weight: 600;
+}
+#progress {
+  width: 300px;
+  height: 90px;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+#stuck {
+  width: 300px;
+  height: 90px;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+#done {
+  width: 300px;
+  height: 90px;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 350px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-text {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background-color: white;
+  border-radius: 7px;
+  margin: auto;
+}
+h2 {
+  width: 380px;
+  height: 50px;
+  display: flex;
+  padding-left: 13px;
+  padding-top: 15px;
+  align-items: center;
+  font-size: 35px;
+}
+.content {
+  width: 370px;
+
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.input {
+  display: flex;
+  flex-direction: column;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+}
+#select {
+  height: 35px;
+  padding-left: 7px;
+}
+.lower_add {
+  width: 100%;
+  height: 30px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.textarea {
+  margin: 1px;
+  padding: 1px;
+  width: 100%;
+  height: 100px;
+  resize: none;
+}

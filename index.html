@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="layout">
+        <div id="to-do">
+          <div class="head">
+            <div class="name">To do</div>
+            <div class="number">0</div>
+          </div>
+
+          <div id="button" class="footer">
+            <div class="plus">+</div>
+            <div class="add">Add card</div>
+          </div>
+        </div>
+        <div id="progress">
+          <div class="head">
+            <div class="name">In progress</div>
+            <div class="number">0</div>
+          </div>
+
+          <div class="footer">
+            <div class="plus">+</div>
+            <div class="add">Add card</div>
+          </div>
+        </div>
+        <div id="stuck">
+          <div class="head">
+            <div class="name">Stuck</div>
+            <div class="number">0</div>
+          </div>
+
+          <div class="footer">
+            <div class="plus">+</div>
+            <div class="add">Add card</div>
+          </div>
+        </div>
+        <div id="done">
+          <div class="head">
+            <div class="name">Done</div>
+            <div class="number">0</div>
+          </div>
+
+          <div class="footer">
+            <div class="plus">+</div>
+            <div class="add">Add card</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-text">
+        <h2>Add Task</h2>
+        <div class="content">
+          <div class="input">
+            <label for="">Title</label>
+            <input id="title_input" type="text" />
+          </div>
+          <div class="input">
+            <label for="">Description</label>
+            <textarea id="desc_input" class="textarea"> </textarea>
+          </div>
+          <div class="options">
+            <label for="">Status</label>
+
+            <select class="status_input" id="select">
+              <option value="To do">To do</option>
+              <option value="In progress">In progress</option>
+              <option value="Stuck">Stuck</option>
+              <option value="Done">Done</option>
+            </select>
+          </div>
+          <div class="options">
+            <label for="">Priority</label>
+
+            <select class="priority_input" id="select">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <button class="lower_add">Add Task</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>
