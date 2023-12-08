@@ -17,7 +17,7 @@
           <div class="head">
             <div class="name">To do</div>
 
-            <div class="number">0</div>
+            <div class="number" id="number_todo">0</div>
           </div>
           <div id="to_do-container" class="component"></div>
 
@@ -29,8 +29,9 @@
         <div id="progress">
           <div class="head">
             <div class="name">In progress</div>
-            <div class="number">0</div>
+            <div class="number" id="number_progress">0</div>
           </div>
+          <div id="progress_container" class="component"></div>
 
           <div class="footer">
             <div class="plus">+</div>
@@ -40,8 +41,9 @@
         <div id="stuck">
           <div class="head">
             <div class="name">Stuck</div>
-            <div class="number">0</div>
+            <div class="number" id="number_stuck">0</div>
           </div>
+          <div id="stuck_container" class="component"></div>
 
           <div class="footer">
             <div class="plus">+</div>
@@ -51,8 +53,9 @@
         <div id="done">
           <div class="head">
             <div class="name">Done</div>
-            <div class="number">0</div>
+            <div class="number" id="number_done">0</div>
           </div>
+          <div id="done_container" class="component"></div>
 
           <div class="footer">
             <div class="plus">+</div>
@@ -77,8 +80,8 @@
             <label for="">Status</label>
 
             <select class="status_input" id="select_status">
-              <option value="To do">To do</option>
-              <option value="In progress">In progress</option>
+              <option value="Todo">To do</option>
+              <option value="Inprogress">In progress</option>
               <option value="Stuck">Stuck</option>
               <option value="Done">Done</option>
             </select>
