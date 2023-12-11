@@ -44,9 +44,11 @@ select_priority.addEventListener("change", (event) => {
 });
 
 const setData = (result) => {
-  state.push({ ...result });
+  const uniqId = "id" + Math.random().toString(16).slice(2);
+  state.push({ ...result, id: uniqId });
   localStorage.setItem("result-1", JSON.stringify(state));
   render();
+  location.reload();
 };
 
 add_button.addEventListener("click", () => {
@@ -60,10 +62,9 @@ add_button.addEventListener("click", () => {
 });
 
 const cardComponent = (props) => {
-  const { title, desc, status, priority } = props;
-  const uniqId = "id" + Math.random().toString(16).slice(2);
+  const { title, desc, status, priority, id } = props;
 
-  return `<div class="${status} results" id=${uniqId} draggable="true">
+  return `<div class="${status} results" id=${id} draggable="true">
   <div class="main_content">
   <div class="check">
     <i class="fa-regular fa-circle-check"></i>
@@ -121,17 +122,30 @@ const render = () => {
   number_done.innerHTML = task_done.length;
 };
 render();
-
+console.log(result);
 // drag and drop
 const allTasks = document.querySelectorAll(".results");
-
-let temp;
 const todoCard = document.getElementById("to-do");
 const progressCard = document.getElementById("progress");
 const stuckCard = document.getElementById("stuck");
 const doneCard = document.getElementById("done");
+let temp = "";
 
-Array.prototype.forEach.call(allTasks, (el) => {
+const checkStatus = (sttus, checks) => {
+  if (checks) {
+    if (sttus.id === "todocard") {
+      objOfresult.status = "Todo";
+    } else if (sttus.id === "progressCard") {
+      objOfresult.status = "Inprogress";
+    } else if (sttus.id === "stuckCard") {
+      objOfresult.status = "Stuck";
+    } else if (sttus.id === "doneCard") {
+      objOfresult.status = "Done";
+    }
+  }
+};
+
+allTasks.forEach((el) => {
   el.addEventListener("dragstart", (event) => {
     event.dataTransfer.setData("todo", event.target.id);
   });
@@ -145,24 +159,81 @@ cards.forEach((el) => {
 todoCard.addEventListener("drop", (event) => {
   temp = event.dataTransfer.getData("todo");
   const draggedTodo = document.getElementById(temp);
-
   todo_cont.appendChild(draggedTodo);
+  // status oorchloh
+  const sum = state.find(({ id }) => id == temp);
+  const responsePrg = JSON.parse(localStorage.getItem("result-1"));
+
+  const newArr = responsePrg.map((el) => {
+    if (el.id == temp) {
+      return { ...el, status: "Todo" };
+    }
+    return el;
+  });
+  localStorage.setItem("result-1", JSON.stringify(newArr));
+
+  render();
+  checkStatus();
+  location.reload();
 });
 
 progressCard.addEventListener("drop", (event) => {
   temp = event.dataTransfer.getData("todo");
   const draggedProg = document.getElementById(temp);
   progress_container.appendChild(draggedProg);
+  // status oorchloh
+  const sum = state.find(({ id }) => id == temp);
+  const responsePrg = JSON.parse(localStorage.getItem("result-1"));
+
+  const newArr = responsePrg.map((el) => {
+    if (el.id == temp) {
+      return { ...el, status: "Inprogress" };
+    }
+    return el;
+  });
+  localStorage.setItem("result-1", JSON.stringify(newArr));
+
+  render();
+  checkStatus();
+  location.reload();
 });
 stuckCard.addEventListener("drop", (event) => {
   temp = event.dataTransfer.getData("todo");
   const draggedStuck = document.getElementById(temp);
   stuck_container.appendChild(draggedStuck);
+  // status oorchloh
+  const sum = state.find(({ id }) => id == temp);
+  const responsePrg = JSON.parse(localStorage.getItem("result-1"));
+
+  const newArr = responsePrg.map((el) => {
+    if (el.id == temp) {
+      return { ...el, status: "Stuck" };
+    }
+    return el;
+  });
+  localStorage.setItem("result-1", JSON.stringify(newArr));
+
+  render();
+  checkStatus();
+  location.reload();
 });
 doneCard.addEventListener("drop", (event) => {
   temp = event.dataTransfer.getData("todo");
   const draggedDone = document.getElementById(temp);
   done_container.appendChild(draggedDone);
-});
+  // status oorchloh
+  const sum = state.find(({ id }) => id == temp);
+  const responsePrg = JSON.parse(localStorage.getItem("result-1"));
 
-// status oorchloh
+  const newArr = responsePrg.map((el) => {
+    if (el.id == temp) {
+      return { ...el, status: "Done" };
+    }
+    return el;
+  });
+  localStorage.setItem("result-1", JSON.stringify(newArr));
+
+  render();
+  checkStatus();
+  location.reload();
+});
