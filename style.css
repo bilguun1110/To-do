@@ -190,3 +190,10 @@ h2 {
   height: 30px;
   border: 1px solid black;
 }
+
+.doneBlack {
+  background-color: black;
+  border-radius: 50%;
+
+  color: white;
+}

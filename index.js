@@ -4,6 +4,8 @@ const footer = document.getElementsByClassName("footer");
 Array.prototype.forEach.call(footer, (el) => {
   el.onclick = (event) => {
     myModal.style.display = "block";
+    editTask.innerHTML = "Add Task";
+    add_button.innerHTML = "Add Task";
   };
 });
 
@@ -23,6 +25,7 @@ const todo_cont = document.getElementById("to_do-container");
 const progress_container = document.getElementById("progress_container");
 const stuck_container = document.getElementById("stuck_container");
 const done_container = document.getElementById("done_container");
+const editTask = document.getElementById("editTask");
 
 let state = [];
 const firstGet = JSON.parse(localStorage.getItem("result-1"));
@@ -51,23 +54,29 @@ const setData = (result) => {
   location.reload();
 };
 
-add_button.addEventListener("click", () => {
-  setData(result);
+let activeEdit = false;
 
-  title_input.value = "";
-  desc_input.value = "";
-  select_status.value = "Todo";
-  select_priority.value = "low";
-  myModal.style.display = "none";
+add_button.addEventListener("click", () => {
+  if (activeEdit) {
+    editCurrentTask();
+  } else {
+    setData(result);
+
+    title_input.value = "";
+    desc_input.value = "";
+    select_status.value = "Todo";
+    select_priority.value = "low";
+    myModal.style.display = "none";
+  }
 });
 
 const cardComponent = (props) => {
-  const { title, desc, status, priority, id } = props;
+  const { title, desc, status, priority, id, style } = props;
 
   return `<div class="${status} results" id=${id} draggable="true">
   <div class="main_content">
   <div class="check">
-    <i class="fa-regular fa-circle-check"></i>
+    <i class="${style} id="black" fa-regular fa-circle-check"></i>
   </div>
   <div class="lists">
     <h3>${title}</h3>
@@ -75,8 +84,8 @@ const cardComponent = (props) => {
     <button style="width: 60px">${priority}</button>
   </div>
   <div class="edits">
-    <i class="fa-regular fa-circle-xmark"></i>
-    <i class="fa-solid fa-pen-to-square"></i>
+    <i id="rm-${id}" class="fa-regular fa-circle-xmark"></i>
+    <i id="edit-${id}" class="fa-solid fa-pen-to-square"></i>
   </div>
 </div>
     `;
@@ -100,19 +109,25 @@ const render = () => {
   done_container.innerHTML = "";
 
   response.forEach((el) => {
-    const result = cardComponent(el);
+    let style = "";
+
     switch (el.status) {
       case "Todo":
-        todo_cont.innerHTML += result;
+        const resultTodo = cardComponent({ ...el, style });
+        todo_cont.innerHTML += resultTodo;
         break;
       case "Inprogress":
-        progress_container.innerHTML += result;
+        const resultProgress = cardComponent({ ...el, style });
+        progress_container.innerHTML += resultProgress;
         break;
       case "Stuck":
-        stuck_container.innerHTML += result;
+        const resultStuck = cardComponent({ ...el, style });
+        stuck_container.innerHTML += resultStuck;
         break;
       case "Done":
-        done_container.innerHTML += result;
+        style = "doneBlack";
+        const resultDone = cardComponent({ ...el, style });
+        done_container.innerHTML += resultDone;
         break;
     }
   });
@@ -122,7 +137,7 @@ const render = () => {
   number_done.innerHTML = task_done.length;
 };
 render();
-console.log(result);
+
 // drag and drop
 const allTasks = document.querySelectorAll(".results");
 const todoCard = document.getElementById("to-do");
@@ -237,3 +252,81 @@ doneCard.addEventListener("drop", (event) => {
   checkStatus();
   location.reload();
 });
+
+const removeBtns = document.querySelectorAll(".fa-circle-xmark");
+const editBtns = document.querySelectorAll(".fa-pen-to-square");
+
+removeBtns.forEach((element) => {
+  // x-button
+  element.addEventListener("click", (event) => {
+    const ID = event.target.id.split("-")[1];
+
+    const dbData = JSON.parse(localStorage.getItem("result-1"));
+    const newArray = dbData.filter((el) => {
+      if (el.id != ID) {
+        return el;
+      }
+    });
+    localStorage.setItem("result-1", JSON.stringify(newArray));
+    render();
+    checkStatus();
+    location.reload();
+  });
+});
+
+let edittedTaskID = "";
+
+editBtns.forEach((el) => {
+  el.addEventListener("click", (event) => {
+    activeEdit = true;
+    myModal.style.display = "block";
+    editTask.innerHTML = "Edit Task";
+    add_button.innerHTML = "Save";
+    const editId = event.target.id.split("-")[1];
+    edittedTaskID = editId;
+    const editData = JSON.parse(localStorage.getItem("result-1"));
+    const editArray = editData.find((element) => element.id == editId);
+
+    title_input.value = editArray.title;
+    desc_input.value = editArray.desc;
+    select_status.value = editArray.status;
+    select_priority.value = editArray.priority;
+  });
+});
+
+function editCurrentTask() {
+  const editData = JSON.parse(localStorage.getItem("result-1"));
+  const filter = editData.filter(({ id }) => id != edittedTaskID);
+  const edittedTask = editData.find(({ id }) => id == edittedTaskID);
+
+  edittedTask.title = title_input.value;
+  edittedTask.desc = desc_input.value;
+  edittedTask.status = select_status.value;
+  edittedTask.priority = select_priority.value;
+
+  localStorage.setItem("result-1", JSON.stringify([...filter, edittedTask]));
+  myModal.style.display = "none";
+  activeEdit = false;
+  render();
+  location.reload();
+
+  // const newar = editData.map((el) => {
+  //   if (el.id === edittedTaskID) {
+  //     return {
+  //       ...el,
+  //       title: title_input.value,
+  //       desc: desc_input.value,
+  //       status: select_status.value,
+  //       priority: select_priority.value,
+  //     };
+  //   } else {
+  //     return el;
+  //   }
+  // });
+
+  // localStorage.setItem("result-1", JSON.stringify(newar));
+  // myModal.style.display = "none";
+  // activeEdit = false;
+  // render();
+  // location.reload();
+}
