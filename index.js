@@ -55,13 +55,12 @@ const setData = (result) => {
 };
 
 let activeEdit = false;
-
+console.log(activeEdit);
 add_button.addEventListener("click", () => {
   if (activeEdit) {
     editCurrentTask();
   } else {
     setData(result);
-
     title_input.value = "";
     desc_input.value = "";
     select_status.value = "Todo";
@@ -76,7 +75,7 @@ const cardComponent = (props) => {
   return `<div class="${status} results" id=${id} draggable="true">
   <div class="main_content">
   <div class="check">
-    <i class="${style} id="black" fa-regular fa-circle-check"></i>
+    <i class="${style} fa-regular fa-circle-check" id="black"></i>
   </div>
   <div class="lists">
     <h3>${title}</h3>
@@ -310,23 +309,23 @@ function editCurrentTask() {
   render();
   location.reload();
 
-  // const newar = editData.map((el) => {
-  //   if (el.id === edittedTaskID) {
-  //     return {
-  //       ...el,
-  //       title: title_input.value,
-  //       desc: desc_input.value,
-  //       status: select_status.value,
-  //       priority: select_priority.value,
-  //     };
-  //   } else {
-  //     return el;
-  //   }
-  // });
+  //   // const newar = editData.map((el) => {
+  //   //   if (el.id === edittedTaskID) {
+  //   //     return {
+  //   //       ...el,
+  //   //       title: title_input.value,
+  //   //       desc: desc_input.value,
+  //   //       status: select_status.value,
+  //   //       priority: select_priority.value,
+  //   //     };
+  //   //   } else {
+  //   //     return el;
+  //   //   }
+  //   // });
 
-  // localStorage.setItem("result-1", JSON.stringify(newar));
-  // myModal.style.display = "none";
-  // activeEdit = false;
-  // render();
-  // location.reload();
+  //   // localStorage.setItem("result-1", JSON.stringify(newar));
+  //   // myModal.style.display = "none";
+  //   // activeEdit = false;
+  //   // render();
+  //   // location.reload();
 }
